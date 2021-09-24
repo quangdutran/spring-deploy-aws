@@ -1,0 +1,142 @@
+{
+	"info": {
+		"_postman_id": "6ac90171-38d0-4c14-88e1-ac91ae32a785",
+		"name": "AppIntegrationTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Device",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    const responseJson = pm.response.json();\r",
+							"    console.log(responseJson);\r",
+							"    pm.expect(responseJson.name).to.eql(\"Oppo\");\r",
+							"    //const price = 123.43 * 20 / 100;\r",
+							"    //pm.expect(responseJson.price).to.eql(price);\r",
+							"    pm.expect(responseJson.id).to.be.a(\"number\");\r",
+							"    pm.variables.set('deviceId', responseJson.id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Oppo\",\r\n    \"description\": \"China brand\",\r\n    \"price\": 123.43,\r\n    \"onSale\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/devices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"devices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Device",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.name).to.eql(\"Oppo\");\r",
+							"    //const price = 123.43 * 20 / 100;\r",
+							"    //pm.expect(responseJson.price).to.eql(price);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/devices/{{deviceId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"devices",
+						"{{deviceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/devices/{{deviceId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"devices",
+						"{{deviceId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
